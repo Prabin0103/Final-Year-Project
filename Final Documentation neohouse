@@ -1,0 +1,1031 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{tabularx}
+\usepackage{pgfgantt}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{anyfontsize}
+\usepackage[table]{xcolor}
+\usepackage[style=ieee,sorting=none]{biblatex}
+
+\addbibresource{bibliography.bib}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+
+
+\makeatletter
+\patchcmd{\@caption}{\setcounter{subfigure}{0}}{}{}{}
+\makeatother
+
+
+
+\geometry{
+ left=1in,
+ right=1in,
+ top=1in,
+ bottom=1in
+}
+
+\linespread{1.5}
+\setlength{\parindent}{0pt}
+\pagenumbering{gobble}
+
+\begin{document}
+
+% ---------------- TITLE PAGE ----------------
+\begin{titlepage}
+\begin{center}
+
+\large
+A Major Project Final Report on
+
+\vspace{}
+\huge
+\textbf{NeoHouse: Home Automation With Smart Parking and Energy Consumption Prediction System}
+
+\vfill
+
+\large
+Submitted in Partial Fulfillment of the\\
+Requirements for the Degree of\\
+\textbf{Bachelor of Engineering in Information Technology}\\
+under Pokhara University
+
+\vfill
+
+Submitted by:\\
+\textbf{Ram Kumar Isar (211532)}\\
+\textbf{Krishna Bishwakarma (211519)}\\
+\textbf{Gajendra Thakur (211516)}\\
+\textbf{Aavash Joshi (211503)}\\
+\textbf{Prabin Kumar Sah (211526)}\\
+
+
+\vfill
+
+Under the supervision of \\
+\textbf{Er.Roshan Kumar Sah}
+
+\vfill
+
+Date:\\
+\textbf{14 February 2026}
+
+\vfill
+
+
+
+\end{center}
+	
+	\begin{wrapfigure}{L}{0.2\textwidth}
+	\centering
+	\includegraphics[width=0.2\textwidth]{ncit_logo.png}
+	\end{wrapfigure}
+	
+	\fontfamily{phv}\selectfont
+	
+	\textbf {Department of Information Technology}  
+	
+	% \Large %17pt
+        \LARGE %21pt
+	\textbf {NEPAL COLLEGE OF} 
+	
+	\LARGE %21pt
+	\textbf {\underline {INFORMATION TECHNOLOGY} }
+	
+	\small %11 pt
+	Balkumari, Lalitpur, Nepal
+	
+	
+\end{titlepage}
+% ---------------- Acknowledgement ----------------
+\newpage
+\pagenumbering{Roman}
+\setcounter{page}{1}
+
+\section*{Acknowledgement}
+\addcontentsline{toc}{section}{Acknowledgement}
+
+\noindent
+We would like to express our sincere gratitude to Nepal College of Information Technology (NCIT) for providing us the environment, guidance, and support required to undertake this major project. We would especially like to thank our Head of Department, Er. Mahesh Neupane, for his continuous encouragement, valuable supervision, and for offering us the opportunity to develop an IoT based project.This project has been a valuable learning experience that enhanced
+our understanding of IoT, automation, embedded systems, and data analysis.\\
+We would also like to thank our supervisor, Er. Roshan Kumar Sah, for his continuous encouragement, and valuable supervision throughout the development process.\\
+We also extend our heartfelt thanks to our team members for their dedication and teamwork in successfully integrating
+all system components..
+
+% ---------------- ABSTRACT ----------------
+\newpage
+\pagenumbering{Roman}
+\setcounter{page}{2}
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+\noindent
+The rapid evolution of the Internet of Things (IoT) has enabled the development of intelligent living environments that enhance comfort, automation, and energy efficiency. This project, titled NeoHouse IoT, presents a fully integrated smart home and smart parking system designed to automate essential household functions while ensuring safety and convenience. The proposed system uses an ESP32-based architecture to control lighting, fan operations, RGB ambient lighting, and environmental monitoring. Users can operate the system manually, through a mobile dashboard, enabling seamless hands-free control of home appliances.\\
+A notable feature of this project is the music-reactive RGB lighting system, where LED strips dynamically adapt to audio input, creating personalized ambient experiences. The smart parking module uses ultrasonic sensors to detect vehicle presence and display real-time slot availability, improving space management for homes and buildings. Environmental and safety sensors—including temperature, motion, smoke, and gas detectors—provide continuous monitoring and automated alerts, ensuring a secure home environment. All collected data is displayed in real time through a mobile or web interface, offering users complete visibility and control from any location.\\
+Overall, NeoHouse IoT demonstrates an effective integration of automation, intelligent sensing, security, and interactive control. The system showcases how IoT can transform traditional environments into responsive, energy-efficient, and user-centric smart spaces.\\
+
+
+\textbf{Keywords:} \textit{IoT, Smart Home Automation, Smart Parking System, ESP32, RGB Lighting, Environmental Monitoring, Real-Time Monitoring, Automation System}
+
+
+% ---------------- TOC ----------------
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+% ---------------- INTRODUCTION ----------------
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+\noindent
+The NeoHouse IoT project aims to develop an integrated smart home and smart parking system that automates household appliances and provides real-time monitoring. Using an ESP32 microcontroller, the system controls lights, fans, RGB lighting, and environmental sensors through mobile, dashboard, and voice commands. It also includes music-reactive lighting for interactive ambience and a smart parking module that detects vehicle presence and displays live slot availability. Additionally, safety features such as motion, gas, smoke, and temperature monitoring help ensure a secure home environment. NeoHouse IoT demonstrates how affordable IoT technology can transform traditional homes into intelligent living spaces.
+In recent years, rapid urbanization and the increasing adoption of digital technologies have created a strong demand for intelligent and efficient living environments. Modern households require systems that not only automate routine tasks but also enhance safety, optimize energy usage, and improve overall quality of life. Traditional home systems operate in isolation and lack real-time monitoring, data-driven decision-making, and centralized control, leading to inconvenience and inefficient resource utilization.
+
+The NeoHouse IoT project addresses these challenges by integrating smart home automation, smart parking management, and energy consumption prediction into a single unified platform. By combining IoT sensors, cloud connectivity, and machine learning techniques, the system enables users to monitor and control home appliances, track parking availability, and analyze energy usage patterns in real time. The use of ESP32 as the core controller ensures cost-effectiveness while maintaining reliability and scalability.
+
+Furthermore, the inclusion of predictive analytics allows the system to move beyond basic automation towards intelligent decision support. Energy consumption prediction helps users understand usage trends and encourages energy-efficient behavior, while smart parking prediction reduces congestion and improves space management. Overall, NeoHouse IoT represents a practical and future-ready solution that demonstrates how emerging technologies can be applied to build smarter, safer, and more sustainable living environments.
+
+
+
+% ---------------- PROBLEM STATEMENT ----------------
+\newpage
+\subsection{Problem Statement}
+\noindent
+Traditional homes and parking systems lack intelligent automation, real-time monitoring, and unified control, resulting in inconvenience, energy wastage, safety risks, and inefficient parking management. Hence, a low-cost, integrated IoT-based solution is required to address these challenges.
+
+\begin{itemize}
+\item No centralized system to remotely control home appliances such as lights, fans, and RGB lighting.
+\item Limited real-time monitoring of environmental and security parameters like temperature, gas leakage, smoke, and motion.
+\item Poor integration of voice-controlled features, reducing accessibility for elderly and differently-abled users.
+\item Absence of real-time parking slot detection, leading to congestion and user frustration.
+
+\end{itemize}
+
+% ---------------- OBJECTIVES ----------------
+\newpage
+\subsection{Project Objectives}
+\noindent
+The main objective of this project is to design and develop a low-cost, integrated IoT-based smart home and smart parking system that provides centralized control, real-time monitoring, enhanced safety, and improved user convenience.
+\begin{itemize}
+\item To develop a centralized platform for remote control of home appliances such as lights, fans, and RGB lighting.
+\item To implement real-time monitoring of environmental and security parameters including temperature,  smoke, and motion.
+\item To design a real-time parking slot detection and monitoring system to reduce congestion.
+\item To predict energy consumption and check parking slot availability.
+\end{itemize}
+
+% ---------------- SIGNIFICANCE ----------------
+\newpage
+\section{Significance of the Study}
+\noindent
+The NeoHouse IoT system holds significant value in advancing modern home automation by integrating convenience, safety, and energy efficiency into a unified platform. This study contributes to the growing need for smart living solutions by demonstrating how IoT technologies can simplify daily household tasks through intelligent control of appliances, real-time monitoring, and automation. The project benefits homeowners by reducing energy wastage through automated control of lights, fans, and sensors, helping to create a more sustainable living environment.\\
+Additionally, the integration of smart parking provides practical advantages in residential areas, ensuring efficient space utilization and reducing user frustration associated with searching for available parking slots. Enhanced safety features such as motion detection, gas leak alerts, and environmental monitoring offer users improved protection and peace of mind.\\
+From an educational perspective, this study showcases the practical application of IoT, sensor systems, and automation, serving as a valuable reference for students, researchers, and developers interested in building comprehensive smart home solutions. It highlights how affordable technologies like ESP32 and sensors can be combined to create powerful, real-world systems.
+
+
+% ---------------- SCOPE & LIMITATIONS ----------------
+\newpage
+\section{Scope and Limitations}
+
+\subsection{Scope}
+\begin{itemize}
+\item The system enables remote and real-time control of home appliances such as lights, fans, and RGB lighting using an ESP32 microcontroller.
+\item Provides multi-mode control options including mobile dashboard, manual switches, automation rules.
+\item Implements smart parking functionality using ultrasonic sensors to detect vehicle presence and display available parking slots.
+\item Integrates environmental and safety monitoring through gas, smoke, temperature, and motion sensors for alert generation.
+\item Includes music-reactive RGB lighting to enhance user experience with dynamic visual effects.
+\end{itemize}
+
+\subsection{Limitations}
+\begin{itemize}
+\item The system depends on Wi-Fi connectivity; performance may degrade in areas with poor network stability.
+\item Voice control accuracy may vary depending on background noise, microphone quality, and internet speed.
+\item IR sensors in the parking module may produce inaccurate readings in extreme weather conditions or at certain angles.
+\end{itemize}
+
+% ---------------- Literature Review ----------------
+\newpage
+\newpage
+\section{Literature Review}
+
+\subsection{Synergizing Smart Home with Smart Parking using IOT}
+A smart house is a home with online gadgets that allow remote monitoring and control of electrical appliances and systems such as lighting and heating \cite{elhajj2019}. Smart home technology, also known as home automation or demotics (from the Latin “Domus” meaning “house”), that allows homeowners to manage smart gadgets safely, comfortably with less use of energy. Specifically, IoT may be regarded as a concept under which a group of goods/objects may be connected using communication without a physical connection to a wired network, Items can be linked to each other to develop a new job business or even prioritize another \cite{chuang2014}. With local population growth and financial growth, the number of vehicles on the road is growing steadily \cite{vaibhav2016}. Smart parking can be thought of as one of the Internet appliances which can help the car owners in parking their vehicles in a systematic manner using their mobile devices \cite{chen2011}. Smart Parking is a parking solution that can include smart built-in parking sensors, cameras, or counters. These devices are usually embedded inside or placed near parking lots to make sure parking is free and not crowded \cite{wang2011}. Parking is the most important problem for a big city.
+
+\subsection{Applying smart parking system with internet of things (IoT) design}
+\begin{itemize}
+\item \textbf{Smart Parking System (SPS):}
+
+ SPS refers to parking management system that combines cloud computing technology, database, and mobile devices in parking systems. The system created is not just an operational system for managing parking lots, but also storing information and accessing upto-date information on the condition of parking lots. The procurement of an automated parking lot operational system aims to provide fast, safe, monitored and transparent parking services \cite{fairus2011}.
+
+\item \textbf{Internet of Things (IoT):}
+
+The IoT (Internet of Things) is a computational concept that describes every physical objects can be connected to the internet and can identify itself between other devices. As for capabilities such as data sharing, remote control, etc., including objects in the real world. Examples are machineries, sensors, electronics, collections, any equipment, including people that are all connected to local and global networks through embedded sensors and are always active \cite{ardjuna2015}.
+\end{itemize}
+
+\subsection{An IoT-Based Smart Home Automation System}
+The Internet of Things (IoT) is a system that allows devices to be connected and remotely monitored across the Internet. In the last years, the IoT concept has had a strong evolution, being currently used in various domains such as smart homes, telemedicine, industrial environments, etc. \cite{elhajj2019}. Wireless sensor network technologies integrated into the IoT enable a global interconnection of smart devices with advanced functionalities \cite{chuang2014}. A wireless home automation network, composed of sensors and actuators 
+that share resources and are interconnected to each other, is the key technology to making intelligent homes. A “smart home” is a part of the IoT paradigm and aims to integrate home automation.
+
+\subsection{RFID and IR Based Smart Parking System} 
+Radio Frequency Identification is a
+developing innovation that has been
+around since mid 1900's and was utilized
+in World War II. An early research paper
+had investigated RFID work where the
+creator of this paper expressed that
+"Clearly, impressive innovative work must
+be done before the field of helpful
+applications is investigated". At that point,
+the electromagnetic hypothesis identified
+with RFID was concentrated in 1960's. Aside from that, creations as richardson
+Robert's "Remotely actuated radio
+recurrence fueled gadgets" occurred this
+time, the wheels of RFID advancement
+had begun turning. 1960's was the
+beginning of the reception of RFID in
+business exercises. A recognizable
+advancement work around there had
+occurred in 1970's the place vehicle
+following, production line robotization and
+so forth were the prime aims. By 1980's,
+RFID innovation had come to fruition as
+far as the full usage of the innovation. The
+sending of utilizations utilizing this
+innovation was seen in 1990's. The pace of
+improvements in RFID is too obvious in
+the 21st century where even the
+unassuming of thing like material is
+bearing a little clingy fix of RFID and
+human implantation of RFID \cite{tang2006,chinrungrueng2007}.
+
+
+
+
+% ---------------- METHODOLOGY ----------------
+\newpage
+\section{Methodology}
+\noindent
+The development of this system will follow the Incremental Model of the Software Development Life Cycle (SDLC) where the system is built and improved in multiple small modules (increments).Each increment adds new features while keeping previously developed parts fully functional. The process begins with requirement analysis, identifying the need for smart home automation,smart parking, and safety monitoring.
+
+\subsection{Software Development Life Cycle}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Incremental.png}
+    \caption{Incremental Model}
+    \label{fig:sample}
+\end{figure}
+\newpage
+\subsection{System Architecture}
+\noindent
+The proposed AI system integrates IoT sensing, cloud storage, and machine learning to deliver real-time predictions for both energy consumption and parking availability. The system follows a multi-layer architecture consisting of an edge sensing layer (ESP32), communication layer (Wi-Fi), backend gateway/API layer, database layer, AI/ML processing layer, and application layer (mobile dashboard).\\
+At the sensing layer, the ESP32 collects real-time readings from parking sensors (HC-SR04 ultrasonic distance sensors per slot) and optional environmental sensors such as DHT11. The energy module uses either energy sensor readings (power/energy measurements) or a historical dataset captured from appliance usage logs. Raw readings are preprocessed at the edge to reduce noise (e.g., averaging ultrasonic distance values) and then transmitted over Wi-Fi using HTTP/MQTT or through Blynk connectivity.\\
+In the backend layer, the API gateway validates incoming data, stores readings in the database, and forwards relevant features to the ML inference service. The database maintains raw sensor values, engineered features, and prediction logs to support both model training and monitoring.\\
+The AI layer includes two machine learning models: (1) a Linear Regression model for predicting continuous energy consumption values (kWh/power), and (2) a Random Forest Classifier for predicting parking slot status (occupied/free). Linear Regression is used due to its simplicity and interpretability for energy prediction, while Random Forest is chosen for parking classification because it is robust to noisy sensor readings and can model non-linear decision boundaries.\\
+Finally, the mobile application (Flutter) and dashboard (Blynk) display real-time sensor values and predictions to users. The system supports continuous operation where new data is logged, predictions are generated instantly, and the UI is updated accordingly.
+
+\newpage
+\subsection{AI System Architecture}
+
+\noindent\textbf{1. Home Automation and Smart Infrastructure}
+
+\begin{itemize}
+    
+    \item An energy optimization engine utilizing the Linear Regression model to predict power consumption and enable efficient load management.
+\end{itemize}
+
+\noindent\textbf{2. Perception \& IoT Data Layer}
+
+This layer consists of the hardware and sensors deployed within the home and parking area:
+\begin{itemize}
+    \item \textbf{Energy Monitoring Subsystem:} Smart meters and current sensors (e.g., PZEM-004T) that track real-time power usage across different appliances or hours.
+    
+    \item \textbf{Smart Parking Subsystem:} Proximity, pressure, and ultrasonic sensors that detect vehicle presence, weight, and height to determine occupancy.
+    
+    \item \textbf{Contextual Sensors:} Ambient temperature and precipitation sensors used as features for both energy and parking models.
+\end{itemize}
+
+
+\noindent\textbf{2. Data Communication \& Edge Processing}
+
+\begin{itemize}
+    \item \textbf{Edge Gateway:} A central microcontroller such as an ESP32 or Raspberry Pi that aggregates sensor data from multiple sensors.
+    
+    \item \textbf{Data Serialization:} Local cleaning and formatting of raw sensor readings into structured data frames compatible with Python-based machine learning models.
+\end{itemize}
+
+\noindent\textbf{3. AI Model \& Inference Layer (The Core)}
+
+This layer hosts the predictive intelligence derived from trained machine learning models:
+\begin{itemize}
+    \item \textbf{Energy Prediction Engine (Linear Regression):}
+    \begin{itemize}
+        \item \textbf{Preprocessing:} Loads the pre-trained \texttt{scaler.pkl} file to normalize real-time power consumption data.
+        
+        \item \textbf{Inference:} Uses the \texttt{Linear\_Regression\_model.pkl} to predict hourly energy consumption and estimate total energy usage between specific intervals (e.g., hours 3 to 6) to support load balancing.
+    \end{itemize}
+    
+   
+\end{itemize}
+
+\noindent\textbf{4. Application Logic \& Automation Layer}
+
+This layer converts AI predictions into intelligent home automation actions:
+\begin{itemize}
+    \item \textbf{Load Shedding Logic:} When the Energy Prediction Engine forecasts peak consumption, the system automatically dims non-essential lighting or schedules high-power appliances during lower-consumption periods.
+    
+    \item \textbf{Parking Orchestration:} If a parking violation is detected or a space becomes \textit{Vacant}, the system notifies the homeowner through a dashboard or mobile application.
+\end{itemize}
+
+\noindent\textbf{5. User Interface \& Reporting Layer}
+
+\begin{itemize}
+    \item \textbf{Real-Time Dashboard:} Displays live energy consumption statistics (kWh) and real-time parking spot occupancy status.
+    
+    \item \textbf{Historical Analytics:} Utilizes stored historical data to generate analytical reports on energy savings and parking usage patterns for documentation and project evaluation.
+\end{itemize}
+
+% ---------------- Algorithm ----------------
+\newpage
+\section{Algorithm}
+\subsection{Linear Regression for Energy Prediction}
+
+\noindent
+
+
+Linear Regression is a supervised machine learning algorithm used to predict a continuous value by establishing a linear relationship between independent variables (features) and a dependent variable (target).
+
+In our system, Linear Regression is used to predict household energy consumption using sensor data such as temperature (DHT11), humidity, device usage status (light/fan ON--OFF), and time of operation.
+
+The algorithm learns from historical data collected from the smart home and estimates how each feature affects electricity usage. After training, the model achieved approximately:
+
+\begin{itemize}
+    \item $R^2 = 0.6180$
+    \item RMSE = 5.04
+\end{itemize}
+
+These performance metrics help the system monitor power usage and suggest energy-saving actions.
+
+\subsection*{Mathematical Formula}
+
+The basic Linear Regression equation is:
+
+\begin{equation}
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \cdots + \beta_n x_n + \varepsilon
+\end{equation}
+
+Where:
+
+\begin{itemize}
+    \item $y$ = Predicted energy consumption
+    \item $\beta_0$ = Intercept (constant value)
+    \item $\beta_1, \beta_2, \beta_3, \dots, \beta_n$ = Model coefficients (weights)
+    \item $x_1, x_2, x_3, \dots, x_n$ = Input features (temperature, humidity, device usage, time, etc.)
+    \item $\varepsilon$ = Error (difference between actual and predicted value)
+\end{itemize}
+
+\subsection*{Cost Function (Error Minimization)}
+
+Linear Regression finds the best fitting line by minimizing the Mean Squared Error (MSE):
+
+\begin{equation}
+\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+\end{equation}
+
+Where:
+
+\begin{itemize}
+    \item $y_i$ = Actual energy consumption
+    \item $\hat{y}_i$ = Predicted energy consumption
+    \item $n$ = Number of observations
+\end{itemize}
+
+
+
+
+
+% ---------------- Technical Description ----------------
+\newpage
+\section{Technical Description}
+\subsection{Use Case Diagram}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Use Case Diagram.png}
+    \caption{Use Case Diagram}
+    \label{fig:sample}
+\end{figure}
+
+\newpage
+\noindent
+\textbf{A. Home User}
+\begin{itemize}
+    \item Control Lights (ON/OFF)
+    \item Control Fan
+    \item Control RGB Lighting Modes
+    \item Enable Music-Reactive Lighting Mode
+    \item View Home Status
+    \item View Real-Time Parking Availability
+\end{itemize}
+
+\noindent
+\textbf{B. Mobile App}
+\begin{itemize}
+    \item Send commands to devices
+    \item Display home status (lights, fans, sensors)
+    \item Display parking availability
+    \item Provide control interface for all home devices
+\end{itemize}
+
+\noindent
+\textbf{C. Parking User}
+\begin{itemize}
+    \item Detect vehicle in slot (via system)
+    \item View parking availability
+    \item Park in free slot (system updates status)
+\end{itemize}
+
+\noindent
+
+
+\noindent
+\textbf{D. Admin / Installer}
+\begin{itemize}
+    \item Configure devices \& thresholds
+    \item Install hardware and connect sensors
+    \item Perform calibration and maintenance
+\end{itemize}
+    
+\end{abstract}
+\item 
+
+% ---------------- SEQUENCE DIAGRAM----------------
+\newpage
+\subsection{Sequence Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Sequence daigram.png}
+    \caption{Sequence Diagram}
+    \label{fig:sample}
+\end{figure}
+
+% ---------------- ACTIVITY DIAGRAM ----------------
+
+\newpage
+\subsection{Activity Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Activity Diagram.png}
+    \caption{Activity Diagram}
+    \label{fig:sample}
+\end{figure}
+
+% ---------------- Class Diagram ----------------
+\newpage
+\subsection{Class Diagram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Class diagram (2).png}
+    \caption{Class Diagram}
+    \label{fig:sample}
+\end{figure}
+
+
+% --------------- Tools and Teechnologies Used ----------------
+\newpage
+\section{Tools and Technologies Used}
+\subsection{Hardware}
+
+
+\begin{enumerate}
+
+\item \textbf{ESP32 Development Board – Main Controller} \\
+The ESP32 is the main controller of the system that manages all sensors and devices. It processes data, controls outputs, and connects to Wi-Fi for IoT communication. It acts as the brain of the Neo House Automation system.
+
+\item \textbf{IR Sensor – Parking Slot Detection} \\
+The IR (Infrared) sensor is used to detect the presence of a vehicle in the parking slot. It works by emitting infrared light and detecting its reflection from nearby objects. When a vehicle is detected, the system updates the parking status in real time.
+
+\item \textbf{DHT11 / DHT22 Sensor – Temperature \& Humidity} \\
+The DHT sensor measures temperature and humidity levels inside the house. This data can be used for monitoring comfort conditions and for energy prediction analysis. It helps maintain a smart and efficient environment.
+
+\item \textbf{RFID Module and RFID Card – Intrusion Detection} \\
+The RFID (Radio Frequency Identification) module is used for secure access control. Only authorized RFID cards can unlock the system, preventing unauthorized entry. If an unknown card is detected, the system can trigger an alert for security purposes.
+
+\item \textbf{Relay Module – Control Lights and Fan} \\
+The relay module acts as a switch controlled by the ESP32. It allows low-voltage signals to control high-voltage appliances like lights and fans. This enables safe home automation.
+
+\item \textbf{RGB LED– Lighting Modes and Effects} \\
+The RGB LED strip provides different lighting colors and effects. It can be controlled through the ESP32 to create different lighting modes. It enhances the smart home experience.
+
+\item \textbf{Servo Motor – Gate Open and Close} \\
+The servo motor is used to automate the opening and closing of the gate. It is controlled by the ESP32 and rotates to a precise angle based on system commands. This allows secure and convenient access without manual intervention.
+
+\item \textbf{OLED Display – System Display} \\
+The OLED display is used to show real-time information about the system, such as parking status, temperature, humidity, and access notifications. It provides a clear visual interface for users to monitor the smart home system.
+
+\item \textbf{Buzzer – Alert Notification} \\
+The buzzer is used for audio alerts in case of security breaches, invalid RFID cards, or system notifications. It provides immediate feedback and ensures users are aware of important events in the system.
+\item \textbf{Power Adapter (5V) – System Power Supply} \\
+The 5V power adapter supplies the required electrical power to the system. It ensures stable and continuous operation of all components. Proper power supply is essential for reliable performance.
+
+\item \textbf{Jumper Wires \& Breadboard – Circuit Connections} \\
+Jumper wires and a breadboard are used to connect components without soldering. They help in building and testing the circuit easily. This makes prototyping and modifications simple and convenient.
+
+\end{enumerate}
+
+\newpage
+\subsection{Software}
+
+\begin{enumerate}
+
+\item \textbf{Arduino IDE / PlatformIO – Programming the ESP32} \\
+Arduino IDE and PlatformIO are development environments used to program the ESP32 microcontroller. They allow writing, compiling, and uploading code to the board. These platforms support multiple libraries and make hardware interaction easier for IoT projects. PlatformIO also provides advanced features like debugging and integration with multiple IDEs.
+
+\item \textbf{Blynk - Communication between App and IoT System}\\
+Blynk is used as the communication platform between the ESP32 and the mobile application in this project. It provides a cloud-based infrastructure that enables real-time data transmission, device control, and monitoring through a user-friendly mobile interface. Blynk simplifies IoT development by handling server connectivity, authentication, and secure communication. This ensures efficient and reliable interaction between the smart home system and the user.
+
+\item \textbf{Node.js and MongoDB} \\
+Node.js is a server-side JavaScript runtime used to build backend services for the IoT system. MongoDB is a NoSQL database used to store system data, such as sensor readings and user activity. Together, they enable data processing, storage, and retrieval for monitoring and analysis.
+
+\item \textbf{Mobile App (Flutter) – User Interface for Control and Monitoring} \\
+Flutter is a cross-platform framework used to develop the mobile app for the smart home system. It provides an interactive interface for controlling devices, checking parking status, and monitoring energy usage. Users can receive real-time updates and alerts from the IoT system.
+
+\item \textbf{Firebase – Data Storage, Alerts, User Authentication} \\
+Firebase is a cloud platform used for storing IoT data, sending push notifications, and managing user authentication. It ensures secure and reliable storage of sensor readings and system events. Firebase also enables real-time alerts and smooth communication between the app and ESP32.\\
+
+\item \textbf{PlantUML / Draw.io – Creating UML Diagrams} \\
+PlantUML and Draw.io are tools used to create UML diagrams, flowcharts, and system architecture diagrams. They help in visualizing the project design and workflow clearly. Using these tools improves documentation and makes it easier to explain system components and interactions.
+
+\item \textbf{Jupyter Notebook and Python – Model Training and Coding} \\
+Jupyter Notebook and Python are used in this project for developing, training, and testing machine learning models efficiently. Python provides powerful libraries such as NumPy, Pandas, Scikit-learn, and TensorFlow for data preprocessing, model building, and performance evaluation. Jupyter Notebook offers an interactive environment that allows step-by-step code execution, real-time visualization of results, and simplified debugging during experimentation. This combination makes the model development process more flexible, organized, and easier to analyze.
+
+\item \textbf{LaTeX – Documentation} \\
+LaTeX is used for preparing professional project documentation and reports. It provides precise control over formatting, equations, tables, and figures. Using LaTeX ensures a clean and well-structured final report.
+
+\end{enumerate}
+
+
+% ---------------- Proposed Performance Analysis Methodology ---------------
+\newpage
+\section{Proposed Performance Analysis Methodology}
+\subsection{Performance Analysis Methodology}
+
+\begin{itemize}
+    \item \textbf{Response Time Testing:} Measure how quickly devices (lights, fan, RGB, parking status) respond to app.
+
+    \item \textbf{Sensor Accuracy Check:} Compare temperature, gas, motion, and ultrasonic readings with reference values to verify accuracy.
+
+    \item \textbf{Parking Detection Reliability:} Test ultrasonic sensor performance by recording correct FREE/OCCUPIED detections under different conditions.
+
+    \item \textbf{System Stability:} Observe continuous ESP32 operation to ensure no crashes, disconnects, or delays.
+
+    \item \textbf{Mobile App Performance:} Evaluate update speed, dashboard responsiveness, and notification delivery.
+\end{itemize}
+
+\subsection{Validation Scheme}
+
+\begin{itemize}
+    \item \textbf{Functional Testing:} Verify each feature (light control, fan control, RGB modes, parking updates, alerts) against system requirements.
+
+    \item \textbf{Real Environment Testing:} Deploy system in actual home/parking conditions to validate accuracy and responsiveness.
+
+    \item \textbf{Stress Testing:} Run the system for long durations and multiple rapid commands to ensure reliability.
+
+    \item \textbf{Data Log Validation:} Analyze recorded sensor readings and event logs to confirm correct operation.
+\end{itemize}
+
+
+
+% ---------------- Task Division ----------------
+\newpage
+\section{Task Division}
+
+The project is being developed in incremental phases with each phase focusing on building and testing specific features. Below is a task breakdown with an estimated time schedule.
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|p{9cm}|}
+\hline
+\textbf{Team Member} & \textbf{Assigned Tasks} \\ \hline
+
+Krishna Bishwakarma &
+Hardware Assembly, IoT integration, Testing and System Deployment
+\\ \hline
+
+Aavash Joshi &
+Mobile App Development, Backend Development, Documentation
+\\ \hline
+
+Ram Kumar Isar &
+ESP32 Firmware Coding, Machine Learning Model Training, Documentation
+\\ \hline
+
+Prabin Kumar Sah &
+Hardware Assembly and Setup, Data Collection, Documentation
+\\ \hline
+
+Gajendra Thakur &
+Hardware Setup (ESP32, Sensors), UI/UX, Project Lead, Documentation
+\\ \hline
+
+\end{tabular}
+\caption{Division of tasks among project team members}
+\label{table:taskdiv}
+\end{table}
+
+
+% ---------------- Gantt Chart ----------------
+\newpage
+\section{Gantt Chart}
+
+\begin{figure}[H]
+    \centering
+    
+      \includegraphics[width=\linewidth,height=10cm,keepaspectratio]{Gantt chart1.png}
+    \caption{Increment 1}
+    \label{fig:sample}
+    \vspace{0.9cm}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=\linewidth,height=10cm,keepaspectratio]{Gantt Chart 2.png}
+    \caption{Increment 2}
+    \label{fig:sample}
+    \vspace{0.9cm}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+     \includegraphics[width=\linewidth,height=11cm,keepaspectratio]{Gantt Chart 3.png}
+    \caption{Increment 3}
+    \label{fig:sample}
+\end{figure}
+
+% ---------------- Conclusion ----------------
+\newpage
+\section{Conclusion}
+\noindent
+In conclusion, the project “Neo House Automation with Smart Parking and Energy Prediction System” successfully demonstrates the practical implementation of an IoT-based smart home solution. The system integrates home automation, intelligent parking management, real-time intrusion detection, and energy consumption prediction into a unified and efficient platform. By combining sensors, microcontrollers, cloud connectivity, and data analysis techniques, we were able to create a smart environment that enhances convenience, security, and energy efficiency.
+
+The smart parking module optimizes space utilization, while the intrusion detection system improves home security through real-time monitoring and alerts. Additionally, the energy prediction system helps users understand and manage their power consumption effectively, promoting sustainable energy usage.
+
+Overall, this project strengthened our technical skills in IoT, embedded systems, programming, and system integration. It also provided valuable experience in teamwork, problem-solving, and real-world implementation. The Neo House Automation system represents a scalable and innovative approach towards future smart living solutions.
+
+% ---------------- Future Scope --------------
+\newpage
+\section{Further Works}
+
+\subsection*{Advanced AI-Based Energy Optimization}
+
+\begin{itemize}
+    \item Improve the existing energy prediction model using advanced deep learning algorithms such as LSTM and GRU for more accurate long-term forecasting.
+    
+    \item Integrate real-time weather API data and occupancy analytics to enhance prediction accuracy.
+    
+    \item Implement automatic load balancing where the system intelligently controls appliances during peak and off-peak hours to reduce electricity cost.
+\end{itemize}
+
+\subsection*{Enhanced RFID-Based Smart Parking}
+
+\begin{itemize}
+    \item Upgrade the current RFID system to support encrypted RFID cards for improved security and prevention of unauthorized duplication.
+    
+    \item Develop a centralized RFID database system for managing multiple users, vehicles, and access levels.
+    
+    \item Integrate automatic billing and entry/exit logging using RFID authentication.
+\end{itemize}
+
+\subsection*{AI-Based Intrusion Detection Enhancement}
+
+\begin{itemize}
+    \item Integrate computer vision techniques such as face recognition to distinguish between authorized and unauthorized individuals.
+    
+    \item Use machine learning models to analyze behavioral patterns and reduce false intrusion alerts.
+    
+    \item Implement real-time alert notification with image/video capture directly to the mobile application.
+\end{itemize}
+
+\subsection*{Mobile Application Enhancement}
+
+\begin{itemize}
+    \item Add advanced analytics dashboard for monitoring energy usage trends, parking history, and security logs.
+    
+    \item Implement push notifications and emergency alert features for intrusion detection and abnormal energy consumption.
+    
+    \item Enable remote firmware updates and device control through secure cloud integration.
+\end{itemize}
+
+\subsection*{Scalability and Smart City Integration}
+
+\begin{itemize}
+    \item Expand the system to support apartment complexes, office buildings, and commercial parking areas.
+    
+    \item Integrate with smart city infrastructure for centralized monitoring and management.
+    
+    \item Implement cloud-based multi-user architecture for large-scale deployment.
+\end{itemize}
+
+\subsection*{Add Voice + AI Assistant Integration}
+\begin{itemize}
+    \item Integrate Google Assistant and Amazon Alexa to control lights, fans, parking gates, and other appliances through simple voice commands.
+
+    \item Connect an OpenAI-based smart voice assistant to enable intelligent, decision-based actions such as automatically turning off non-essential devices when predicted energy consumption is high.
+
+    \item This feature improves accessibility through hands-free operation and enhances the overall user experience, making NeoHouse more interactive and aligned with modern smart home technologies.
+\end{itemize}
+
+
+
+% ---------------- References ----------------
+\newpage
+
+\addcontentsline{toc}{section}{References}
+\printbibliography
+
+
+% ---------------- Appendix ----------------
+\newpage
+\appendix
+
+%--------------first page ------------
+
+
+\section*{Appendix}
+\appendix
+
+
+
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{Breedboard.png}
+%     \caption{Breedboard}
+%     \label{fig:smart_parking}
+% \end{figure}
+
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{ESP32-C_01.png}
+%     \caption{ESP32 Microcontroller}
+%     \label{fig:sample}
+% \end{figure}
+
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{oled.png}
+%     \caption{OLED Screen Display}
+%     \label{fig:iot_home}
+% \end{figure}
+
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{PIR.png}
+%     \caption{PIR Motion Sensor}
+%     \label{fig:iot_home}
+% \end{figure}
+
+% \vspace{4cm}
+
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{servo-motor.png}
+%     \caption{Servo Motor}
+%     \label{fig:iot_home}
+% \end{figure}
+
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{MQ2.png}
+%     \caption{MQ2 Smoke Sensor}
+%     \label{fig:sample}
+% \end{figure}
+
+
+
+% \begin{figure}[h!]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{IR sensor.png}
+%     \caption{IR Sensor}
+%     \label{fig:iot_home}
+% \end{figure}
+
+% \vspace{5cm}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.9\textwidth]{DTH11.png}
+%     \caption{DHT11}
+%     \label{fig:sample}
+% \end{figure}
+
+
+
+
+\begin{figure}[H]
+\centering
+
+% ---------- First Row ----------
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=50cm,keepaspectratio]{BreedBoard.png}
+    \caption*{Breadboard}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=50cm,keepaspectratio]{ESP32-C_01.png}
+    \caption*{ESP32 Microcontroller}
+\end{subfigure}
+
+\vspace{4cm}
+
+% ---------- Second Row ----------
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=50cm,keepaspectratio]{DTH11.png}
+    \caption*{DHT11 Sensor}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=50cm,keepaspectratio]{MQ2.png}
+    \caption*{MQ2 Smoke Sensor}
+\end{subfigure}
+
+\end{figure}
+
+
+%--------------second page---------------
+
+\newpage
+\appendix
+
+
+\begin{figure}[H]
+\centering
+
+% ---------- First Row ----------
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=50cm,keepaspectratio]{IR sensor.png}
+    \caption*{IR Sensor}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=50cm,keepaspectratio]{oled.png}
+    \caption*{OLED Display}
+\end{subfigure}
+
+\vspace{3cm}
+
+% ---------- Second Row ----------
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=11cm,keepaspectratio]{servo-motor.png}
+    \caption*{Servo Motor}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=50cm,keepaspectratio]{RFID.jpg}
+    \caption*{RFID Reader and Card}
+\end{subfigure}
+
+\end{figure}
+
+
+
+%-------------Third Page ------------
+\newpage
+\appendix
+
+\begin{figure}[H]
+\centering
+
+% ---------- First Row ----------
+\vspace{3cm}
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=20cm,keepaspectratio]{Preloader.jpeg}
+    \caption*{Preloader Page}
+    
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=20cm,keepaspectratio]{login.jpeg}
+    \caption*{Login Page}
+\end{subfigure}
+
+\vspace{0.9cm}
+\end{figure}
+
+
+% ---------- Second Row ----------
+\newpage
+\appendix
+
+\begin{figure}[H]
+\centering
+\vspace{3cm}
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=20cm,keepaspectratio]{Signup.jpeg}
+    \caption*{Sign Up Page}
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=20cm,keepaspectratio]{Forgetpass.jpeg}
+    \caption*{Password Recovery Page}
+\end{subfigure}
+
+\end{figure}
+
+
+\newpage
+\appendix
+
+\begin{figure}[H]
+\centering
+
+% ---------- First Row ----------
+\vspace{3cm}
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=20cm,keepaspectratio]{Dashboard.jpeg}
+    \caption*{Dashboard Page}
+    
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=20cm,keepaspectratio]{Sensor.jpeg}
+    \caption*{Sensors Page}
+\end{subfigure}
+
+\vspace{0.9cm}
+\end{figure}
+
+
+\newpage
+\appendix
+
+\begin{figure}[H]
+\centering
+
+% ---------- First Row ----------
+\vspace{3cm}
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=20cm,keepaspectratio]{Alert.jpeg}
+    \caption*{Alerts Page}
+    
+\end{subfigure}
+\hfill
+\begin{subfigure}[t]{0.47\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=20cm,keepaspectratio]{Energy Prediction1.jpeg}
+    \caption*{Energy Prediction}
+\end{subfigure}
+
+\vspace{0.9cm}
+\end{figure}
+
+\newpage
+\appendix
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=20cm,keepaspectratio]{Energy Prediction2.jpeg}
+    \caption*{Energy Prediction}
+    \label{fig:appendix_image}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=20cm,keepaspectratio]{Circuit.jpeg}
+    \caption*{Physical Circuit Connection}
+    \label{fig:appendix_image}
+    
+\end{figure}
+
+
+\end{document}
